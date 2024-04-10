@@ -30,6 +30,6 @@ def sort_folder(dir_path='.'):
             shutil.move(md, path)
 
 parser = argparse.ArgumentParser(description='Organize obsidian daily markdown files into subfolders by year and month')
-parser.add_argument('-p', '--path', default='/Users/guarnit/Desktop/Notes', help='absolute path of directory to organize')
+parser.add_argument('-p', '--path', help='absolute path of obsidian notes directory to organize')
 args = parser.parse_args()
 sort_folder(args.path)
