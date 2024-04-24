@@ -5,6 +5,7 @@ import glob
 import shutil
 import re
 import os
+import time
 
 def get_directories(dir_path='.'):
     dirs = set()
@@ -21,13 +22,15 @@ def sort_folder(dir_path='.'):
     for md in mds:
         if re.match(date_regex, md):
             name, _ = md.split('.')
-            year, month, _ = name.split('-')
-            path = f"{year}/{month}"
-            if year not in get_directories():
-                os.mkdir(year)
-            if month not in get_directories(year):
-                os.mkdir(path)
-            shutil.move(md, path)
+            today = time.strftime("%Y-%m-%d", time.localtime())
+            if name != today:
+                year, month, _ = name.split('-')
+                path = f"{year}/{month}"
+                if year not in get_directories():
+                    os.mkdir(year)
+                if month not in get_directories(year):
+                    os.mkdir(path)
+                shutil.move(md, path)
 
 parser = argparse.ArgumentParser(description='Organize obsidian daily markdown files into subfolders by year and month')
 parser.add_argument('-p', '--path', help='absolute path of obsidian notes directory to organize')
